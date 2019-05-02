@@ -40,7 +40,7 @@ class BowlingTest {
 
     @Test
     public void finalZeroSpareSum() {
-        assertEquals(29, BowlingComputer.scoreAll("11 11 11 11 11 11 11 11 11 1/ -"));
+        assertEquals(28, BowlingComputer.scoreAll("11 11 11 11 11 11 11 11 11 1/ -"));
     }
 
     @Test
@@ -70,7 +70,7 @@ class BowlingTest {
 
     @Test
     public void allSpareSum() {
-        assertEquals(110, BowlingComputer.scoreAll("1- 1- 1- 1- 1- 1- 1- 1- 1- 1-1"));
+        assertEquals(110, BowlingComputer.scoreAll("1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1"));
     }
 
     @Test

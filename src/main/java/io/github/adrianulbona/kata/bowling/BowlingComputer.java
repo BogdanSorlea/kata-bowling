@@ -24,25 +24,21 @@ public class BowlingComputer {
 
         int result = 0;
 
-        try {
-            if (frame.equals("X")) {
-                if (secondRoll == 'X') {
-                    result = 10 + 10 + parseSpecial(thirdRoll);
-                } else {
-                    if (thirdRoll == '/') {
-                        result = 10 + 10;
-                    } else {
-                        result = 10 + parseSpecial(secondRoll) + parseSpecial(thirdRoll);
-                    }
-                }
-            } else if (frame.charAt(1) == '/') {
-                result = 10 + parseSpecial(secondRoll);
+        if (frame.equals("X")) {
+            if (secondRoll == 'X') {
+                result = 10 + 10 + parseSpecial(thirdRoll);
             } else {
-                result = parseSpecial(frame.charAt(0))
-                            + parseSpecial(frame.charAt(1));
+                if (thirdRoll == '/') {
+                    result = 10 + 10;
+                } else {
+                    result = 10 + parseSpecial(secondRoll) + parseSpecial(thirdRoll);
+                }
             }
-        } catch (Exception e) {
-            System.out.println("Unexpected exception, probably invalid data");
+        } else if (frame.charAt(1) == '/') {
+            result = 10 + parseSpecial(secondRoll);
+        } else {
+            result = parseSpecial(frame.charAt(0))
+                        + parseSpecial(frame.charAt(1));
         }
 
         return result;
@@ -55,15 +51,30 @@ public class BowlingComputer {
         LinkedList<String> framesArray = new LinkedList<String>(Arrays.asList(frames.split(" ")));
         if (framesArray.size() == 10) {
             framesArray.add("");
-        } else if (framesArray.size() == 11) {
+        }
+        if (framesArray.size() == 11) {
             framesArray.add("");
         }
 
         for (int i=0; i<10; i++) {
-            result = result + scoreFrame(framesArray.get(i),
-                                framesArray.get(i+1).charAt(0),
-                                (framesArray.get(i+1).length() == 2 ?
-                                        framesArray.get(i+1).charAt(1) : framesArray.get(i+2).charAt(0)));
+            Character secondRoll = null;
+            Character thirdRoll = null;
+
+            if (framesArray.get(i+1) != null && framesArray.get(i+1).length() > 0) {
+                secondRoll = framesArray.get(i+1).charAt(0);
+            }
+            if (framesArray.get(i+1) != null && framesArray.get(i+1).length() > 1) {
+                thirdRoll = framesArray.get(i+1).charAt(1);
+            } else if (framesArray.get(i+1) != null
+                            && framesArray.get(i+2) != null
+                            && framesArray.get(i+2).length() > 0) {
+                thirdRoll = framesArray.get(i+2).charAt(0);
+            }
+
+            result = result
+                    + scoreFrame(framesArray.get(i), secondRoll, thirdRoll);
+
+
         }
 
         return result;
